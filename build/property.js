@@ -43,7 +43,7 @@ class Property extends adminjs_1.BaseProperty {
         if (this.sequelizePath.autoIncrement) {
             return false;
         }
-        if (this.isId()) {
+        if (this.isId() && !this.sequelizePath.allowEditId) {
             return false;
         }
         return true;

@@ -56,7 +56,7 @@ class Resource extends adminjs_1.BaseResource {
     }
     async count(filter) {
         return this.SequelizeModel.count(({
-            where: (0, convert_filter_1.default)(filter),
+            where: convert_filter_1.default(filter),
         }));
     }
     primaryKey() {
@@ -84,7 +84,7 @@ class Resource extends adminjs_1.BaseResource {
         const { direction, sortBy } = sort;
         const sequelizeObjects = await this.SequelizeModel
             .findAll({
-            where: (0, convert_filter_1.default)(filter),
+            where: convert_filter_1.default(filter),
             limit,
             offset,
             order: [[sortBy, (direction || 'asc').toUpperCase()]],
@@ -114,24 +114,24 @@ class Resource extends adminjs_1.BaseResource {
     }
     async create(params) {
         const parsedParams = this.parseParams(params);
-        const unflattedParams = (0, flat_1.unflatten)(parsedParams);
+        const unflattedParams = flat_1.unflatten(parsedParams);
         try {
             const record = await this.SequelizeModel.create(unflattedParams);
             return record.toJSON();
         }
         catch (error) {
             if (error.name === SEQUELIZE_VALIDATION_ERROR) {
-                throw (0, create_validation_error_1.default)(error);
+                throw create_validation_error_1.default(error);
             }
             if (error.name === SEQUELIZE_UNIQUE_ERROR) {
-                throw (0, create_validation_error_1.default)(error);
+                throw create_validation_error_1.default(error);
             }
             throw error;
         }
     }
     async update(id, params) {
         const parsedParams = this.parseParams(params);
-        const unflattedParams = (0, flat_1.unflatten)(parsedParams);
+        const unflattedParams = flat_1.unflatten(parsedParams);
         try {
             await this.SequelizeModel.update(unflattedParams, {
                 where: {
@@ -145,10 +145,10 @@ class Resource extends adminjs_1.BaseResource {
         }
         catch (error) {
             if (error.name === SEQUELIZE_VALIDATION_ERROR) {
-                throw (0, create_validation_error_1.default)(error);
+                throw create_validation_error_1.default(error);
             }
             if (error.name === SEQUELIZE_UNIQUE_ERROR) {
-                throw (0, create_validation_error_1.default)(error);
+                throw create_validation_error_1.default(error);
             }
             throw error;
         }

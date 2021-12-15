@@ -18,13 +18,13 @@ const convertFilter = (filter) => {
         switch (property.type()) {
             case 'string': {
                 if (property.sequelizePath.values) {
-                    return Object.assign({ [property.name()]: { [sequelize_1.Op.eq]: `${(0, escape_regexp_1.default)(value)}` } }, memo);
+                    return Object.assign({ [property.name()]: { [sequelize_1.Op.eq]: `${escape_regexp_1.default(value)}` } }, memo);
                 }
                 if (isArray) {
                     return Object.assign(Object.assign({}, memo), { [property.name()]: {
                             [sequelize_1.Op.in]: [
                                 ...(previousValue[sequelize_1.Op.in] || []),
-                                (0, escape_regexp_1.default)(value),
+                                escape_regexp_1.default(value),
                             ],
                         } });
                 }
@@ -32,7 +32,7 @@ const convertFilter = (filter) => {
                         ...(memo[sequelize_1.Op.and] || []),
                         {
                             [property.name()]: {
-                                [sequelize_1.Op.like]: `%${(0, escape_regexp_1.default)(value)}%`,
+                                [sequelize_1.Op.like]: `%${escape_regexp_1.default(value)}%`,
                             },
                         },
                     ] });

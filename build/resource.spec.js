@@ -44,54 +44,54 @@ describe('Resource', function () {
     });
     describe('.isAdapterFor', () => {
         it('returns true when sequelize model is given', function () {
-            (0, chai_1.expect)(resource_1.default.isAdapterFor(SequelizeModel)).to.equal(true);
+            chai_1.expect(resource_1.default.isAdapterFor(SequelizeModel)).to.equal(true);
         });
     });
     describe('#database', () => {
         it('returns correct database name', function () {
-            (0, chai_1.expect)(resource.databaseName()).to.equal(config.database);
+            chai_1.expect(resource.databaseName()).to.equal(config.database);
         });
     });
     describe('#databaseType', () => {
         it('returns correct database', function () {
-            (0, chai_1.expect)(resource.databaseType()).to.equal(config.dialect);
+            chai_1.expect(resource.databaseType()).to.equal(config.dialect);
         });
     });
     describe('#name', () => {
         it('returns correct name', function () {
-            (0, chai_1.expect)(resource.name()).to.equal('Users');
+            chai_1.expect(resource.name()).to.equal('Users');
         });
     });
     describe('#id', () => {
         it('returns correct name', function () {
-            (0, chai_1.expect)(resource.id()).to.equal('Users');
+            chai_1.expect(resource.id()).to.equal('Users');
         });
     });
     describe('#properties', () => {
         it('returns all properties', function () {
             const length = 8; // there are 8 properties in the User model (5 regular + __v and _id)
-            (0, chai_1.expect)(resource.properties()).to.have.lengthOf(length);
+            chai_1.expect(resource.properties()).to.have.lengthOf(length);
         });
     });
     describe('#property', () => {
         it('returns given property', function () {
-            (0, chai_1.expect)(resource.property('email')).to.be.an.instanceOf(property_1.default);
+            chai_1.expect(resource.property('email')).to.be.an.instanceOf(property_1.default);
         });
         it('returns null when property doesn\'t exit', function () {
-            (0, chai_1.expect)(resource.property('some.imagine.property')).to.be.null;
+            chai_1.expect(resource.property('some.imagine.property')).to.be.null;
         });
         it('returns nested property for array field', function () {
             const property = resource.property('arrayed.1');
-            (0, chai_1.expect)(property).to.be.an.instanceOf(property_1.default);
-            (0, chai_1.expect)(property === null || property === void 0 ? void 0 : property.type()).to.equal('string');
+            chai_1.expect(property).to.be.an.instanceOf(property_1.default);
+            chai_1.expect(property === null || property === void 0 ? void 0 : property.type()).to.equal('string');
         });
     });
     describe('#findMany', () => {
         it('returns array of BaseRecords', async function () {
             const params = await resource.create({ email: 'john.doe@softwarebrothers.co' });
             const records = await resource.findMany([params.id]);
-            (0, chai_1.expect)(records).to.have.lengthOf(1);
-            (0, chai_1.expect)(records[0]).to.be.instanceOf(adminjs_1.BaseRecord);
+            chai_1.expect(records).to.have.lengthOf(1);
+            chai_1.expect(records[0]).to.be.instanceOf(adminjs_1.BaseRecord);
         });
     });
     describe('#find with filter', () => {
@@ -107,16 +107,16 @@ describe('Resource', function () {
                 gender: 'male',
             }, resource);
             const records = await resource.find(filter, { limit: 20, offset: 0, sort: { direction: 'asc', sortBy: 'id' } });
-            (0, chai_1.expect)(records).to.have.lengthOf(1);
-            (0, chai_1.expect)(records[0]).to.be.instanceOf(adminjs_1.BaseRecord);
-            (0, chai_1.expect)(records[0].params.gender).to.equal('male');
+            chai_1.expect(records).to.have.lengthOf(1);
+            chai_1.expect(records[0]).to.be.instanceOf(adminjs_1.BaseRecord);
+            chai_1.expect(records[0].params.gender).to.equal('male');
         });
         it('returns 0 BaseRecord when filtering on ENUMS', async function () {
             const filter = new adminjs_1.Filter({
                 gender: 'female',
             }, resource);
             const records = await resource.find(filter, { limit: 20, offset: 0, sort: { direction: 'asc', sortBy: 'id' } });
-            (0, chai_1.expect)(records).to.have.lengthOf(0);
+            chai_1.expect(records).to.have.lengthOf(0);
         });
         it('returns error when filtering on ENUMS with invalid value', async function () {
             const filter = new adminjs_1.Filter({
@@ -126,18 +126,18 @@ describe('Resource', function () {
                 await resource.find(filter, { limit: 20, offset: 0, sort: { direction: 'asc', sortBy: 'id' } });
             }
             catch (error) {
-                (0, chai_1.expect)(error.name).to.eq('SequelizeDatabaseError');
+                chai_1.expect(error.name).to.eq('SequelizeDatabaseError');
             }
         });
     });
     describe('#count', () => {
         it('returns 0 when there are none elements', async function () {
             const count = await resource.count(new adminjs_1.Filter({}, {}));
-            (0, chai_1.expect)(count).to.equal(0);
+            chai_1.expect(count).to.equal(0);
         });
         it('returns given count without filters', async function () {
             await resource.create({ email: 'john.doe@softwarebrothers.co' });
-            (0, chai_1.expect)(await resource.count(new adminjs_1.Filter({}, {}))).to.equal(1);
+            chai_1.expect(await resource.count(new adminjs_1.Filter({}, {}))).to.equal(1);
         });
         it('returns given count for given filters', async function () {
             await resource.create({
@@ -153,7 +153,7 @@ describe('Resource', function () {
             const filter = new adminjs_1.Filter({
                 email: 'andrew.golota@softwarebrothers.co',
             }, resource);
-            (0, chai_1.expect)(await resource.count(filter)).to.equal(1);
+            chai_1.expect(await resource.count(filter)).to.equal(1);
         });
     });
     describe('#create', () => {
@@ -168,10 +168,10 @@ describe('Resource', function () {
             });
             it('creates new user when data is valid', async function () {
                 const newCount = await resource.count(null);
-                (0, chai_1.expect)(newCount).to.equal(1);
+                chai_1.expect(newCount).to.equal(1);
             });
             it('returns an object', function () {
-                (0, chai_1.expect)(this.record).to.be.an.instanceof(Object);
+                chai_1.expect(this.record).to.be.an.instanceof(Object);
             });
         });
         context('record with errors', () => {
@@ -187,7 +187,7 @@ describe('Resource', function () {
                     await resource.create(this.params);
                 }
                 catch (error) {
-                    (0, chai_1.expect)(error).to.be.an.instanceOf(adminjs_1.ValidationError);
+                    chai_1.expect(error).to.be.an.instanceOf(adminjs_1.ValidationError);
                 }
             });
         });
@@ -204,7 +204,7 @@ describe('Resource', function () {
                     userId: '',
                 };
                 this.recordParams = await resource.create(this.params);
-                (0, chai_1.expect)(this.recordParams.userId).to.be.null;
+                chai_1.expect(this.recordParams.userId).to.be.null;
             });
         });
     });
@@ -224,7 +224,7 @@ describe('Resource', function () {
             const params = await resource.update(this.record.id, {
                 email: this.newEmail,
             });
-            (0, chai_1.expect)(params.email).to.equal(this.newEmail);
+            chai_1.expect(params.email).to.equal(this.newEmail);
         });
         it('calls update hooks', async function () {
             const beforeUpdateSpy = sinon_1.default.spy();
@@ -234,9 +234,9 @@ describe('Resource', function () {
             SequelizeModel.addHook('beforeBulkUpdate', beforeBulkUpdateSpy);
             SequelizeModel.addHook('afterUpdate', afterUpdateSpy);
             await resource.update(this.record.id, { firstName: 'jack' });
-            (0, chai_1.expect)(beforeUpdateSpy).to.have.been.called;
-            (0, chai_1.expect)(afterUpdateSpy).to.have.been.called;
-            (0, chai_1.expect)(beforeBulkUpdateSpy).not.to.have.been.called;
+            chai_1.expect(beforeUpdateSpy).to.have.been.called;
+            chai_1.expect(afterUpdateSpy).to.have.been.called;
+            chai_1.expect(beforeBulkUpdateSpy).not.to.have.been.called;
         });
     });
     describe('#delete', () => {
@@ -253,7 +253,7 @@ describe('Resource', function () {
         it('deletes the resource', async function () {
             await resource.delete(this.record.id);
             const newRecord = await resource.findOne(this.record.id);
-            (0, chai_1.expect)(newRecord).to.be.null;
+            chai_1.expect(newRecord).to.be.null;
         });
         it('calls delete hooks', async function () {
             const beforeDestroySpy = sinon_1.default.spy();
@@ -263,9 +263,9 @@ describe('Resource', function () {
             SequelizeModel.addHook('beforeBulkDestroy', beforeDestroyUpdateSpy);
             SequelizeModel.addHook('afterDestroy', afterDestroySpy);
             await resource.delete(this.record.id);
-            (0, chai_1.expect)(beforeDestroySpy).to.have.been.called;
-            (0, chai_1.expect)(afterDestroySpy).to.have.been.called;
-            (0, chai_1.expect)(beforeDestroyUpdateSpy).not.to.have.been.called;
+            chai_1.expect(beforeDestroySpy).to.have.been.called;
+            chai_1.expect(afterDestroySpy).to.have.been.called;
+            chai_1.expect(beforeDestroyUpdateSpy).not.to.have.been.called;
         });
     });
 });

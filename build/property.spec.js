@@ -37,65 +37,65 @@ describe('Property', () => {
     describe('#isArray', () => {
         it('returns false for regular (not arrayed) property', () => {
             const property = new property_1.default(getRawProperty('User', 'email'));
-            (0, chai_1.expect)(property.isArray()).to.equal(false);
+            chai_1.expect(property.isArray()).to.equal(false);
         });
         it('returns true for array property', () => {
             const property = new property_1.default(getRawProperty('User', 'arrayed'));
-            (0, chai_1.expect)(property.isArray()).to.equal(true);
+            chai_1.expect(property.isArray()).to.equal(true);
         });
     });
     describe('#type', () => {
         it('returns correct string type', () => {
             const property = new property_1.default(getRawProperty('User', 'firstName'));
-            (0, chai_1.expect)(property.type()).to.equal('string');
+            chai_1.expect(property.type()).to.equal('string');
         });
         it('returns correct integer type', () => {
             const property = new property_1.default(getRawProperty('User', 'id'));
-            (0, chai_1.expect)(property.type()).to.equal('number');
+            chai_1.expect(property.type()).to.equal('number');
         });
         it('returns correct date type', () => {
             const property = new property_1.default(getRawProperty('User', 'createdAt'));
-            (0, chai_1.expect)(property.type()).to.equal('datetime');
+            chai_1.expect(property.type()).to.equal('datetime');
         });
         it('returns string when property is an array of strings', () => {
             const property = new property_1.default(getRawProperty('User', 'arrayed'));
-            (0, chai_1.expect)(property.type()).to.equal('string');
+            chai_1.expect(property.type()).to.equal('string');
         });
     });
     describe('#availableValues', () => {
         it('returns null for all standard (Non enum) values', () => {
             const property = new property_1.default(getRawProperty('User', 'email'));
-            (0, chai_1.expect)(property.availableValues()).to.equal(null);
+            chai_1.expect(property.availableValues()).to.equal(null);
         });
         it('returns array of values for the enum field', () => {
             const property = new property_1.default(getRawProperty('User', 'gender'));
-            (0, chai_1.expect)(property.availableValues()).to.deep.equal(['male', 'female']);
+            chai_1.expect(property.availableValues()).to.deep.equal(['male', 'female']);
         });
     });
     describe('#isEditable', () => {
         it('returns false for UUID property', () => {
             const property = new property_1.default(getRawProperty('Comment', 'id'));
-            (0, chai_1.expect)(property.isEditable()).to.equal(false);
+            chai_1.expect(property.isEditable()).to.equal(false);
         });
     });
     describe('#isId', () => {
         it('returns true for id when its default', () => {
             const property = new property_1.default(getRawProperty('User', 'id'));
-            (0, chai_1.expect)(property.isId()).to.eq(true);
+            chai_1.expect(property.isId()).to.eq(true);
         });
         it('returns true for id when its uuid', () => {
             const property = new property_1.default(getRawProperty('Comment', 'id'));
-            (0, chai_1.expect)(property.isId()).to.eq(true);
+            chai_1.expect(property.isId()).to.eq(true);
         });
     });
     describe('isRequired', () => {
         it('returns true for required fields', () => {
             const property = new property_1.default(getRawProperty('User', 'email'));
-            (0, chai_1.expect)(property.isRequired()).to.equal(true);
+            chai_1.expect(property.isRequired()).to.equal(true);
         });
         it('returns false for not required fields', () => {
             const property = new property_1.default(getRawProperty('User', 'gender'));
-            (0, chai_1.expect)(property.isRequired()).to.eq(false);
+            chai_1.expect(property.isRequired()).to.eq(false);
         });
     });
 });

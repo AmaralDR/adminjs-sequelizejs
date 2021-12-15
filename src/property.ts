@@ -50,7 +50,7 @@ class Property extends BaseProperty {
     if (this.sequelizePath.autoIncrement) {
       return false
     }
-    if (this.isId() && !this.sequelizePath.allowEditId) {
+    if (this.isId() && !(this.sequelizePath as any).allowEditId) {
       return false
     }
     return true
